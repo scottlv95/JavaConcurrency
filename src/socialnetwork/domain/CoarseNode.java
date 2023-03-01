@@ -8,6 +8,7 @@ public class CoarseNode<T> implements Node<T> {
 
   public CoarseNode(T item) {
     this.item = item;
+    this.key = item.hashCode();
     this.next = null;
   }
 

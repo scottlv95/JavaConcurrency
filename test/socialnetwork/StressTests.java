@@ -13,10 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.Test;
-import socialnetwork.domain.Backlog;
-import socialnetwork.domain.Board;
-import socialnetwork.domain.Message;
-import socialnetwork.domain.Worker;
+import socialnetwork.domain.*;
 
 public class StressTests {
 
@@ -64,7 +61,7 @@ public class StressTests {
 
   private void runExperiment(ExperimentSettings settings) {
     // TODO replace by your Backlog implementation
-    Backlog backlog = null;
+    Backlog backlog = new CoarseSyncBacklog();
     SocialNetwork socialNetwork = new SocialNetwork(backlog);
 
     Worker[] workers = new Worker[settings.nWorkers];
@@ -86,7 +83,7 @@ public class StressTests {
         .forEach(
             u -> {
               // TODO add your own board implementation
-              socialNetwork.register(u, null);
+              socialNetwork.register(u, new CoarseSyncBoard());
               u.start();
             });
 

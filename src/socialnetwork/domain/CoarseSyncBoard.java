@@ -24,7 +24,7 @@ public class CoarseSyncBoard implements Board {
       pred = curr;
       curr = curr.next();
     } while (curr.key() > key);
-    return new Position<Message>(pred, curr);
+    return new Position<>(pred, curr);
   }
 //
 //  public boolean contains(Message message) {

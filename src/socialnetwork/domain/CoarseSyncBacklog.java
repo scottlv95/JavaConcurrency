@@ -1,6 +1,7 @@
 package socialnetwork.domain;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -23,7 +24,7 @@ public class CoarseSyncBacklog implements Backlog{
       pred = curr;
       curr = curr.next();
     } while (curr.key() < key);
-    return new Position<Task>(pred, curr);
+    return new Position<>(pred, curr);
   }
 
 //  public boolean contains(Task task) {
@@ -58,14 +59,18 @@ public class CoarseSyncBacklog implements Backlog{
 
   @Override
   public Optional<Task> getNextTaskToProcess() {
-    if (head.next().key() == tail.key()) {
-      return Optional.empty();
-    }
-    else {
-      Optional<Task> result = Optional.of(head.next().item());
-      head.setNext(head.next().next());
-      size -= 1;
-      return result;
+    lock.lock();
+    try {
+      if (head.next().key() == tail.key()) {
+        return Optional.empty();
+      } else {
+        Optional<Task> result = Optional.of(head.next().item());
+        head.setNext(head.next().next());
+        size -= 1;
+        return result;
+      }
+    } finally {
+      lock.unlock();
     }
   }
 
