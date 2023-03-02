@@ -61,7 +61,7 @@ public class StressTests {
 
   private void runExperiment(ExperimentSettings settings) {
     // TODO replace by your Backlog implementation
-    Backlog backlog = new CoarseSyncBacklog();
+    Backlog backlog = new HandOverHandSyncBacklog();
     SocialNetwork socialNetwork = new SocialNetwork(backlog);
 
     Worker[] workers = new Worker[settings.nWorkers];
@@ -83,7 +83,7 @@ public class StressTests {
         .forEach(
             u -> {
               // TODO add your own board implementation
-              socialNetwork.register(u, new CoarseSyncBoard());
+              socialNetwork.register(u, new HandOverHandSyncBoard());
               u.start();
             });
 
