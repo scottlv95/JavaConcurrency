@@ -17,7 +17,7 @@ public class Worker extends Thread {
       Optional<Task> optionalTask = backlog.getNextTaskToProcess();
       if (optionalTask.isEmpty()) {
         try {
-          Thread.sleep(100);
+          Thread.sleep(1);
         } catch (InterruptedException e) {
           throw new RuntimeException(e);
         }
