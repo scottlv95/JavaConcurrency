@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.google.common.collect.Multimap;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.junit.Test;
 import socialnetwork.domain.*;
 
@@ -39,24 +41,6 @@ public class StressTests {
   public void testLargeParams() {
     ExperimentSettings settings = new ExperimentSettings(10, 100, 100, 20, 123456);
     runExperiment(settings);
-  }
-
-  static class ExperimentSettings {
-
-    int nWorkers;
-    int nUsers;
-    int maxActions;
-    int maxRecipients;
-    int seed;
-
-    public ExperimentSettings(
-        int nWorkers, int nUsers, int maxActions, int maxRecipients, int seed) {
-      this.nWorkers = nWorkers;
-      this.nUsers = nUsers;
-      this.maxActions = maxActions;
-      this.maxRecipients = maxRecipients;
-      this.seed = seed;
-    }
   }
 
   private void runExperiment(ExperimentSettings settings) {
@@ -172,6 +156,24 @@ public class StressTests {
       int nId = next.getMessageId();
       assertTrue(cId > nId);
       current = next;
+    }
+  }
+
+  static class ExperimentSettings {
+
+    int nWorkers;
+    int nUsers;
+    int maxActions;
+    int maxRecipients;
+    int seed;
+
+    public ExperimentSettings(
+        int nWorkers, int nUsers, int maxActions, int maxRecipients, int seed) {
+      this.nWorkers = nWorkers;
+      this.nUsers = nUsers;
+      this.maxActions = maxActions;
+      this.maxRecipients = maxRecipients;
+      this.seed = seed;
     }
   }
 }

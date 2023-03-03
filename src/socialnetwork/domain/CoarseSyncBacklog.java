@@ -5,10 +5,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class CoarseSyncBacklog implements Backlog{
+public class CoarseSyncBacklog implements Backlog {
 
-  private Lock lock = new ReentrantLock();
   int size = 0;
+  private Lock lock = new ReentrantLock();
   private CoarseNode<Task> head, tail;
 
   public CoarseSyncBacklog() {
@@ -27,7 +27,7 @@ public class CoarseSyncBacklog implements Backlog{
     return new Position<>(pred, curr);
   }
 
-//  public boolean contains(Task task) {
+  //  public boolean contains(Task task) {
 //    lock.lock();
 //    try {
 //      CoarseNode<Task> taskCoarseNode = new CoarseNode<>(task);
@@ -43,16 +43,15 @@ public class CoarseSyncBacklog implements Backlog{
     try {
       CoarseNode<Task> taskCoarseNode = new CoarseNode<>(task);
       Position<Task> where = find(head, taskCoarseNode.key());
-      if (where.curr.key() == taskCoarseNode.key()){
+      if (where.curr.key() == taskCoarseNode.key()) {
         return false;
       } else {
         taskCoarseNode.setNext(where.curr);
         where.pred.setNext(taskCoarseNode);
-        size+=1;
+        size += 1;
         return true;
       }
-    }
-    finally {
+    } finally {
       lock.unlock();
     }
   }
